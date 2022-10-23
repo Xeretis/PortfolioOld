@@ -10,15 +10,13 @@ import {
     List,
     MediaQuery,
     SimpleGrid,
-    Stack,
     Text,
     Title,
     Tooltip,
-    Transition,
     createStyles,
 } from "@mantine/core";
-import { Suspense, lazy, useEffect, useMemo, useState } from "react";
-import { useIntersection, useScrollIntoView, useViewportSize } from "@mantine/hooks";
+import { Suspense, lazy, useEffect, useMemo } from "react";
+import { useScrollIntoView, useViewportSize } from "@mantine/hooks";
 
 import { FullScreenLoading } from "./components/fullScreenLoading";
 import dayguesser from "./assets/dayguesser.png";
@@ -162,8 +160,6 @@ const App = () => {
     const { scrollIntoView: scrollToFirstSection, targetRef: firstSectionRef } = useScrollIntoView({
         duration: 500,
     });
-    const { ref: firstAnimationRef, entry: firstEntry } = useIntersection();
-    const [firstTransition, setFirstTransition] = useState(false);
 
     const {
         scrollIntoView: scrollToSecondSection,
@@ -171,29 +167,6 @@ const App = () => {
     } = useScrollIntoView({
         duration: 500,
     });
-    const { ref: secondAnimationRef, entry: secondEntry } = useIntersection();
-    const [secondTransition, setSecondTransition] = useState(false);
-
-    const { ref: thirdAnimationRef, entry: thirdEntry } = useIntersection();
-    const [thirdTransition, setThirdTransition] = useState(false);
-
-    useEffect(() => {
-        if (firstEntry?.isIntersecting) {
-            setFirstTransition(true);
-        }
-    }, [firstEntry]);
-
-    useEffect(() => {
-        if (secondEntry?.isIntersecting) {
-            setSecondTransition(true);
-        }
-    }, [secondEntry]);
-
-    useEffect(() => {
-        if (thirdEntry?.isIntersecting) {
-            setThirdTransition(true);
-        }
-    }, [thirdEntry]);
 
     useEffect(() => {
         const el = document.getElementById("dottedBg");
@@ -238,49 +211,42 @@ const App = () => {
                 <ScrollAction callback={scrollToFirstSection} />
             </Box>
             <Box ref={firstSectionRef as any} className={classes.content}>
-                <Box ref={firstAnimationRef} className={classes.contentCard}>
-                    <Transition mounted={firstTransition} transition="fade" duration={1500}>
-                        {(transitionStyles) => (
-                            <Box style={transitionStyles}>
-                                <Title style={transitionStyles} order={1} mb="xl">
-                                    About Me
-                                </Title>
-                                <Text align="justify">
-                                    I'm a student of the Lovassy László High School in Veszprém,
-                                    Hungary. I'm currently {age} years old and I started programming
-                                    at about the age of 11 with the C language. Right now I'm most
-                                    interested in <Kbd>full-stack web development</Kbd>, but I have
-                                    some experience with C++ console application and library
-                                    development and Java development as well. I also teach
-                                    programming to primary school students at <Kbd>Logiscool</Kbd>.
-                                </Text>
-                                <Title order={3} my="xl">
-                                    Technologies I Use
-                                </Title>
-                                <List>
-                                    <List.Item>React</List.Item>
-                                    <List.Item>React Native</List.Item>
-                                    <List.Item>Typescript</List.Item>
-                                    <List.Item>Java</List.Item>
-                                    <List.Item>C++</List.Item>
-                                    <List.Item>Laravel</List.Item>
-                                    <List.Item>Express.js</List.Item>
-                                </List>
-                                <Title order={3} my="xl">
-                                    Tools I Use
-                                </Title>
-                                <List>
-                                    <List.Item>Visual Studio Code</List.Item>
-                                    <List.Item>Firefox Developer Edition</List.Item>
-                                    <List.Item>IntelliJ Idea Ultimate</List.Item>
-                                    <List.Item>CLion</List.Item>
-                                    <List.Item>Docker</List.Item>
-                                    <List.Item>Postman</List.Item>
-                                    <List.Item>Git</List.Item>
-                                </List>
-                            </Box>
-                        )}
-                    </Transition>
+                <Box className={classes.contentCard}>
+                    <Title order={1} mb="xl">
+                        About Me
+                    </Title>
+                    <Text align="justify">
+                        I'm a student of the Lovassy László High School in Veszprém, Hungary. I'm
+                        currently {age} years old and I started programming at about the age of 11
+                        with the C language. Right now I'm most interested in{" "}
+                        <Kbd>full-stack web development</Kbd>, but I have some experience with C++
+                        console application and library development and Java development as well. I
+                        also teach programming to primary school students at <Kbd>Logiscool</Kbd>.
+                    </Text>
+                    <Title order={3} my="xl">
+                        Technologies I Use
+                    </Title>
+                    <List>
+                        <List.Item>React</List.Item>
+                        <List.Item>React Native</List.Item>
+                        <List.Item>Typescript</List.Item>
+                        <List.Item>Java</List.Item>
+                        <List.Item>C++</List.Item>
+                        <List.Item>Laravel</List.Item>
+                        <List.Item>Express.js</List.Item>
+                    </List>
+                    <Title order={3} my="xl">
+                        Tools I Use
+                    </Title>
+                    <List>
+                        <List.Item>Visual Studio Code</List.Item>
+                        <List.Item>Firefox Developer Edition</List.Item>
+                        <List.Item>IntelliJ Idea Ultimate</List.Item>
+                        <List.Item>CLion</List.Item>
+                        <List.Item>Docker</List.Item>
+                        <List.Item>Postman</List.Item>
+                        <List.Item>Git</List.Item>
+                    </List>
                 </Box>
                 <Box className={classes.dottedBg} id="dottedBg" />
                 <MediaQuery smallerThan="lg" styles={{ display: "none" }}>
@@ -290,160 +256,142 @@ const App = () => {
                 </MediaQuery>
             </Box>
             <Box ref={secondSectionRef as any} className={classes.content}>
-                <Box ref={secondAnimationRef} className={classes.projectCard}>
-                    <Transition mounted={secondTransition} transition="fade" duration={1500}>
-                        {(transitionStyles) => (
-                            <Box style={transitionStyles}>
-                                <Title style={transitionStyles} align="center" order={1} mb="xl">
-                                    My Projects
+                <Box className={classes.projectCard}>
+                    <Title align="center" order={1} mb="xl">
+                        My Projects
+                    </Title>
+                    <SimpleGrid
+                        cols={2}
+                        spacing="xl"
+                        breakpoints={[{ maxWidth: 1200, cols: 1, spacing: "sm" }]}
+                    >
+                        <Box className={classes.projectContainer}>
+                            <Box pb="xl">
+                                <Title order={3} mb="xl">
+                                    LovassyApp
                                 </Title>
-                                <SimpleGrid
-                                    cols={2}
-                                    spacing="xl"
-                                    breakpoints={[{ maxWidth: 1200, cols: 1, spacing: "sm" }]}
-                                >
-                                    <Box className={classes.projectContainer}>
-                                        <Box pb="xl">
-                                            <Title order={3} mb="xl">
-                                                LovassyApp
-                                            </Title>
-                                            <Text align="justify">
-                                                A full-stack apllication with a React front-end,
-                                                React Native front-end, Laravel back-end and a C#
-                                                desktop application. The purpose of this project is
-                                                to digitalize a grade based reward system in my
-                                                school and it includes a shop as well, where
-                                                students can spend currency earned for grades. I'm
-                                                currently working on it with one of my friends, and
-                                                I'm responsible for the front-ends. The project is
-                                                closed source at the moment.
-                                            </Text>
-                                        </Box>
-                                        <ProjectLinks />
-                                    </Box>
-                                    <Image radius="md" src={llgapp} withPlaceholder />
-                                    <Box className={classes.projectContainer}>
-                                        <Box pb="xl">
-                                            <Title order={3} mb="xl">
-                                                DayGuesser
-                                            </Title>
-                                            <Text align="justify">
-                                                A simple web application I made for practicing the
-                                                Doomsday algorithm (guessing the day of the week
-                                                from a date). It's made with React, Typescript and
-                                                Mantine, and it's open source.
-                                            </Text>
-                                        </Box>
-                                        <ProjectLinks
-                                            website="https://day-guesser.vercel.app/"
-                                            github="https://github.com/Xeretis/DayGuesser"
-                                        />
-                                    </Box>
-                                    <Image radius="md" src={dayguesser} withPlaceholder />
-                                    <Box className={classes.projectContainer}>
-                                        <Box pb="xl">
-                                            <Title order={3} mb="xl">
-                                                Docsharing
-                                            </Title>
-                                            <Text align="justify">
-                                                A monolithic Laravel application made for sharing
-                                                documents and posts with a group of users in a
-                                                space. The features include authentication with
-                                                Laravel Fortify, managing spaces, posts, invites
-                                                (either pernament or temporary) and joining spaces
-                                                with codes, and it's open source.
-                                            </Text>
-                                        </Box>
-                                        <ProjectLinks github="https://github.com/Xeretis/Docsharing" />
-                                    </Box>
-                                    <Image radius="md" src={docsharing} withPlaceholder />
-                                    <Box className={classes.projectContainer}>
-                                        <Box pb="xl">
-                                            <Title order={3} mb="xl">
-                                                NextClient
-                                            </Title>
-                                            <Text align="justify">
-                                                A minecraft utility mod written in Java aimed at
-                                                anarchy servers. I wrote this during carantine in
-                                                2020 and it includes some code from other open
-                                                source utility mods, but most of it is written by
-                                                me. The most notable features are predictive crystal
-                                                aura, macro system, custom client base and nice
-                                                click gui made with PanelStudio, and it's open
-                                                source.
-                                            </Text>
-                                        </Box>
-                                        <ProjectLinks github="https://github.com/Xeretis/NextClient/tree/rewrite" />
-                                    </Box>
-                                    <Image radius="md" src={next} withPlaceholder />
-                                </SimpleGrid>
+                                <Text align="justify">
+                                    A full-stack apllication with a React front-end, React Native
+                                    front-end, Laravel back-end and a C# desktop application. The
+                                    purpose of this project is to digitalize a grade based reward
+                                    system in my school and it includes a shop as well, where
+                                    students can spend currency earned for grades. I'm currently
+                                    working on it with one of my friends, and I'm responsible for
+                                    the front-ends. The project is closed source at the moment.
+                                </Text>
                             </Box>
-                        )}
-                    </Transition>
+                            <ProjectLinks />
+                        </Box>
+                        <Image radius="md" src={llgapp} withPlaceholder />
+                        <Box className={classes.projectContainer}>
+                            <Box pb="xl">
+                                <Title order={3} mb="xl">
+                                    DayGuesser
+                                </Title>
+                                <Text align="justify">
+                                    A simple web application I made for practicing the Doomsday
+                                    algorithm (guessing the day of the week from a date). It's made
+                                    with React, Typescript and Mantine, and it's open source.
+                                </Text>
+                            </Box>
+                            <ProjectLinks
+                                website="https://day-guesser.vercel.app/"
+                                github="https://github.com/Xeretis/DayGuesser"
+                            />
+                        </Box>
+                        <Image radius="md" src={dayguesser} withPlaceholder />
+                        <Box className={classes.projectContainer}>
+                            <Box pb="xl">
+                                <Title order={3} mb="xl">
+                                    Docsharing
+                                </Title>
+                                <Text align="justify">
+                                    A monolithic Laravel application made for sharing documents and
+                                    posts with a group of users in a space. The features include
+                                    authentication with Laravel Fortify, managing spaces, posts,
+                                    invites (either pernament or temporary) and joining spaces with
+                                    codes, and it's open source.
+                                </Text>
+                            </Box>
+                            <ProjectLinks github="https://github.com/Xeretis/Docsharing" />
+                        </Box>
+                        <Image radius="md" src={docsharing} withPlaceholder />
+                        <Box className={classes.projectContainer}>
+                            <Box pb="xl">
+                                <Title order={3} mb="xl">
+                                    NextClient
+                                </Title>
+                                <Text align="justify">
+                                    A minecraft utility mod written in Java aimed at anarchy
+                                    servers. I wrote this during carantine in 2020 and it includes
+                                    some code from other open source utility mods, but most of it is
+                                    written by me. The most notable features are predictive crystal
+                                    aura, macro system, custom client base and nice click gui made
+                                    with PanelStudio, and it's open source.
+                                </Text>
+                            </Box>
+                            <ProjectLinks github="https://github.com/Xeretis/NextClient/tree/rewrite" />
+                        </Box>
+                        <Image radius="md" src={next} withPlaceholder />
+                    </SimpleGrid>
                 </Box>
-                <Box ref={thirdAnimationRef} className={classes.projectCard}>
-                    <Transition mounted={thirdTransition} transition="fade" duration={1500}>
-                        {(transitionStyles) => (
-                            <Box style={transitionStyles} pt="xl">
-                                <Title style={transitionStyles} align="center" order={1} my="lg">
-                                    Other Notable Projects
-                                </Title>
-                                <SimpleGrid
-                                    cols={2}
-                                    spacing="xl"
-                                    breakpoints={[{ maxWidth: 1200, cols: 1, spacing: "sm" }]}
-                                >
-                                    <Box className={classes.projectContainer}>
-                                        <Box pb="xl">
-                                            <Title order={3} mb="xl">
-                                                ExpressBase
-                                            </Title>
-                                            <Text align="justify">
-                                                A project template for full-stack applications with
-                                                an Express.js back-end and React frontend in a
-                                                monorepo, all using typescript. It includes a
-                                                security focused custom auth system, request
-                                                validation, a job queue system with Redis, Prisma
-                                                ORM, emails with Nodemailer and front-end
-                                                implementations for the auth system with RTK Query
-                                                and Mantine, and it's all open source. The full
-                                                feature set is documented in the repo readme.
-                                            </Text>
-                                        </Box>
-                                        <ProjectLinks github="https://github.com/Xeretis/ExpressBase" />
-                                    </Box>
-                                    <Box className={classes.projectContainer}>
-                                        <Box pb="xl">
-                                            <Title order={3} mb="xl">
-                                                CliLib
-                                            </Title>
-                                            <Text align="justify">
-                                                An easy to use, yet powerful header only cli parser
-                                                for C++. It was originally made for my own future
-                                                projects, but it's been open source since the
-                                                beginning. The full feature set, documentation and
-                                                examples are available in the repo.
-                                            </Text>
-                                        </Box>
-                                        <ProjectLinks github="https://github.com/Xeretis/CliLib" />
-                                    </Box>
-                                </SimpleGrid>
-                                <Center mt="md">
-                                    <Button
-                                        component="a"
-                                        href="https://github.com/Xeretis"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        radius="md"
-                                        variant="gradient"
-                                        gradient={{ from: "cyan", to: "blue", deg: 45 }}
-                                    >
-                                        See all my public projects on Github
-                                    </Button>
-                                </Center>
+                <Box className={classes.projectCard}>
+                    <Box pt="xl">
+                        <Title align="center" order={1} my="lg">
+                            Other Notable Projects
+                        </Title>
+                        <SimpleGrid
+                            cols={2}
+                            spacing="xl"
+                            breakpoints={[{ maxWidth: 1200, cols: 1, spacing: "sm" }]}
+                        >
+                            <Box className={classes.projectContainer}>
+                                <Box pb="xl">
+                                    <Title order={3} mb="xl">
+                                        ExpressBase
+                                    </Title>
+                                    <Text align="justify">
+                                        A project template for full-stack applications with an
+                                        Express.js back-end and React frontend in a monorepo, all
+                                        using typescript. It includes a security focused custom auth
+                                        system, request validation, a job queue system with Redis,
+                                        Prisma ORM, emails with Nodemailer and front-end
+                                        implementations for the auth system with RTK Query and
+                                        Mantine, and it's all open source. The full feature set is
+                                        documented in the repo readme.
+                                    </Text>
+                                </Box>
+                                <ProjectLinks github="https://github.com/Xeretis/ExpressBase" />
                             </Box>
-                        )}
-                    </Transition>
+                            <Box className={classes.projectContainer}>
+                                <Box pb="xl">
+                                    <Title order={3} mb="xl">
+                                        CliLib
+                                    </Title>
+                                    <Text align="justify">
+                                        An easy to use, yet powerful header only cli parser for C++.
+                                        It was originally made for my own future projects, but it's
+                                        been open source since the beginning. The full feature set,
+                                        documentation and examples are available in the repo.
+                                    </Text>
+                                </Box>
+                                <ProjectLinks github="https://github.com/Xeretis/CliLib" />
+                            </Box>
+                        </SimpleGrid>
+                        <Center mt="md">
+                            <Button
+                                component="a"
+                                href="https://github.com/Xeretis"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                radius="md"
+                                variant="gradient"
+                                gradient={{ from: "cyan", to: "blue", deg: 45 }}
+                            >
+                                See all my public projects on Github
+                            </Button>
+                        </Center>
+                    </Box>
                 </Box>
             </Box>
             <Center>

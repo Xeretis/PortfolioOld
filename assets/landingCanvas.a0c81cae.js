@@ -1,4 +1,4 @@
-import{r as Ne,u as sm,g as Jx,j as Vt,a as Vg,b as Qx,c as Kx}from"./index.fb003dfe.js";const om={passive:!0};function $x(){const[l,e]=Ne.exports.useState({width:0,height:0}),t=Ne.exports.useCallback(()=>{e({width:window.innerWidth||0,height:window.innerHeight||0})},[]);return sm("resize",t,om),sm("orientationchange",t,om),Ne.exports.useEffect(t,[]),l}/**
+import{r as Ne,u as sm,g as Jx,j as Vt,a as Vg,b as Qx,c as Kx}from"./index.4dc3a836.js";const om={passive:!0};function $x(){const[l,e]=Ne.exports.useState({width:0,height:0}),t=Ne.exports.useCallback(()=>{e({width:window.innerWidth||0,height:window.innerHeight||0})},[]);return sm("resize",t,om),sm("orientationchange",t,om),Ne.exports.useEffect(t,[]),l}/**
  * @license
  * Copyright 2010-2022 Three.js Authors
  * SPDX-License-Identifier: MIT

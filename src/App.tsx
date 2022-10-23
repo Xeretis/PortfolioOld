@@ -15,7 +15,7 @@ import {
     Tooltip,
     createStyles,
 } from "@mantine/core";
-import { Suspense, lazy, useEffect, useMemo } from "react";
+import { Suspense, lazy, useEffect, useMemo, useRef } from "react";
 import { useScrollIntoView, useViewportSize } from "@mantine/hooks";
 
 import { FullScreenLoading } from "./components/fullScreenLoading";
@@ -168,17 +168,18 @@ const App = () => {
         duration: 500,
     });
 
-    useEffect(() => {
-        const el = document.getElementById("dottedBg");
+    const dottedBgRef = useRef(null);
 
+    useEffect(() => {
         document.addEventListener("scroll", (e) => {
-            if (el) {
-                el.style.transform = `translate(${window.scrollX / 15}px, ${
+            if (dottedBgRef.current) {
+                //@ts-ignore
+                dottedBgRef.current.style.transform = `translate(${window.scrollX / 15}px, ${
                     window.scrollY / 15
                 }px)`;
             }
         });
-    });
+    }, [dottedBgRef]);
 
     const age = useMemo(() => {
         var diff_ms = Date.now() - new Date(2006, 4, 13).getTime();
@@ -248,7 +249,7 @@ const App = () => {
                         <List.Item>Git</List.Item>
                     </List>
                 </Box>
-                <Box className={classes.dottedBg} id="dottedBg" />
+                <Box className={classes.dottedBg} ref={dottedBgRef} />
                 <MediaQuery smallerThan="lg" styles={{ display: "none" }}>
                     <Box>
                         <ScrollAction callback={scrollToSecondSection} />

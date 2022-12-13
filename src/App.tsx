@@ -205,8 +205,7 @@ const App = () => {
                         </Text>
                     </Text>
                     <Text className={classes.headerDescription}>
-                        I'm a Hungarian high school student doing web development and sometimes
-                        other kinds of software development as well.
+                        I'm a Hungarian high school student learning CS and doing web development
                     </Text>
                 </Box>
                 <ScrollAction callback={scrollToFirstSection} />
@@ -307,7 +306,7 @@ const App = () => {
                                     Docsharing
                                 </Title>
                                 <Text align="justify">
-                                    A monolithic Laravel application made for sharing documents and
+                                    A monolithic Laravel application, with a Tailwind UI, made for sharing documents and
                                     posts with a group of users in a space. The features include
                                     authentication with Laravel Fortify, managing spaces, posts,
                                     invites (either pernament or temporary) and joining spaces with

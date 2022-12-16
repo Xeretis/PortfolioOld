@@ -282,7 +282,7 @@ const App = () => {
                             </Box>
                             <ProjectLinks />
                         </Box>
-                        <Image radius="md" src={llgapp} withPlaceholder />
+                        <Image alt="Screeshot of the application on different devices" radius="md" src={llgapp} withPlaceholder />
                         <Box className={classes.projectContainer}>
                             <Box pb="xl">
                                 <Title order={3} mb="xl">
@@ -299,7 +299,7 @@ const App = () => {
                                 github="https://github.com/Xeretis/DayGuesser"
                             />
                         </Box>
-                        <Image radius="md" src={dayguesser} withPlaceholder />
+                        <Image alt="Screeshot of the application" radius="md" src={dayguesser} withPlaceholder />
                         <Box className={classes.projectContainer}>
                             <Box pb="xl">
                                 <Title order={3} mb="xl">
@@ -315,7 +315,7 @@ const App = () => {
                             </Box>
                             <ProjectLinks github="https://github.com/Xeretis/Docsharing" />
                         </Box>
-                        <Image radius="md" src={docsharing} withPlaceholder />
+                        <Image alt="Screenshot of the generate invite modal in the application" radius="md" src={docsharing} withPlaceholder />
                         <Box className={classes.projectContainer}>
                             <Box pb="xl">
                                 <Title order={3} mb="xl">
@@ -332,7 +332,7 @@ const App = () => {
                             </Box>
                             <ProjectLinks github="https://github.com/Xeretis/NextClient/tree/rewrite" />
                         </Box>
-                        <Image radius="md" src={next} withPlaceholder />
+                        <Image alt="Screenshot of the client click gui" radius="md" src={next} withPlaceholder />
                     </SimpleGrid>
                 </Box>
                 <Box className={classes.projectCard}>
@@ -410,6 +410,7 @@ const App = () => {
                         </Text>
                         <Group>
                             <ActionIcon
+                                aria-label="Send me an email"
                                 component="a"
                                 href="mailto:ocskon@gmail.com"
                                 variant="transparent"
@@ -430,7 +431,7 @@ const App = () => {
                                     <polyline points="3 7 12 13 21 7"></polyline>
                                 </svg>
                             </ActionIcon>
-                            <CopyButton value="Lorem ipsum#7120" timeout={2000}>
+                            <CopyButton aria-label="Copy discord tag" value="Lorem ipsum#7120" timeout={2000}>
                                 {({ copied, copy }) => (
                                     <Tooltip
                                         label={copied ? "Copied" : 'Copy "Lorem ipsum#7120"'}
